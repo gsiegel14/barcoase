@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Pages Debug - Denver Health QR Processor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .debug-info {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #0066CC;
+        }
+        .success { border-left-color: #28a745; }
+        .error { border-left-color: #dc3545; }
+        .warning { border-left-color: #ffc107; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 4px; overflow-x: auto; }
+        button { 
+            background: #0066CC; 
+            color: white; 
+            border: none; 
+            padding: 10px 20px; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            margin: 5px;
+        }
+        button:hover { background: #0052a3; }
+        .test-results { margin-top: 20px; }
+        .test-item { 
+            padding: 10px; 
+            margin: 5px 0; 
+            border-radius: 4px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+        }
+        .test-pass { background: #d4edda; color: #155724; }
+        .test-fail { background: #f8d7da; color: #721c24; }
+        .test-unknown { background: #d1ecf1; color: #0c5460; }
+    </style>
+</head>
+<body>
+    <h1>🔍 GitHub Pages Deployment Debug</h1>
+    <p><strong>Denver Health QR Code Processor</strong> - Deployment Diagnostics</p>
+    
+    <div class="debug-info">
+        <h2>📍 Location Information</h2>
+        <pre id="location-info">Loading...</pre>
+    </div>
+
+    <div class="debug-info">
+        <h2>🌐 Network Tests</h2>
+        <button onclick="runNetworkTests()">Run Network Tests</button>
+        <div id="network-results" class="test-results"></div>
+    </div>
+
+    <div class="debug-info">
+        <h2>📁 Asset Tests</h2>
+        <button onclick="runAssetTests()">Test Asset Loading</button>
+        <div id="asset-results" class="test-results"></div>
+    </div>
+
+    <div class="debug-info">
+        <h2>🔧 Service Worker Tests</h2>
+        <button onclick="runServiceWorkerTests()">Test Service Worker</button>
+        <div id="sw-results" class="test-results"></div>
+    </div>
+
+    <script>
+        // Display location information
+        function updateLocationInfo() {
+            const info = {
+                'Full URL': window.location.href,
+                'Host': window.location.host,
+                'Hostname': window.location.hostname,
+                'Protocol': window.location.protocol,
+                'Port': window.location.port || 'default',
+                'Pathname': window.location.pathname,
+                'Search': window.location.search || 'none',
+                'Hash': window.location.hash || 'none',
+                'Origin': window.location.origin,
+                'Base URI': document.baseURI,
+                'User Agent': navigator.userAgent,
+                'Referrer': document.referrer || 'none',
+                'Is GitHub Pages': window.location.hostname === 'gsiegel14.github.io' ? 'YES' : 'NO',
+                'Timestamp': new Date().toISOString()
+            };
+            
+            document.getElementById('location-info').textContent = 
+                Object.entries(info).map(([key, value]) => `${key}: ${value}`).join('\n');
+        }
+
+        // Network connectivity tests
+        async function runNetworkTests() {
+            const results = document.getElementById('network-results');
+            results.innerHTML = '<p>Running network tests...</p>';
+            
+            const tests = [
+                { name: 'GitHub Pages Reachability', url: 'https://gsiegel14.github.io/' },
+                { name: 'This Debug Page', url: window.location.href },
+                { name: 'Main App (index.html)', url: window.location.origin + '/index.html' },
+                { name: 'Manifest File', url: window.location.origin + '/manifest.webmanifest' },
+                { name: 'Service Worker', url: window.location.origin + '/registerSW.js' }
+            ];
+            
+            results.innerHTML = '';
+            
+            for (const test of tests) {
+                const testDiv = document.createElement('div');
+                testDiv.className = 'test-item test-unknown';
+                testDiv.innerHTML = `<span>${test.name}</span><span>Testing...</span>`;
+                results.appendChild(testDiv);
+                
+                try {
+                    const response = await fetch(test.url, { method: 'HEAD' });
+                    if (response.ok) {
+                        testDiv.className = 'test-item test-pass';
+                        testDiv.innerHTML = `<span>${test.name}</span><span>✅ ${response.status}</span>`;
+                    } else {
+                        testDiv.className = 'test-item test-fail';
+                        testDiv.innerHTML = `<span>${test.name}</span><span>❌ ${response.status}</span>`;
+                    }
+                } catch (error) {
+                    testDiv.className = 'test-item test-fail';
+                    testDiv.innerHTML = `<span>${test.name}</span><span>❌ ${error.message}</span>`;
+                }
+            }
+        }
+
+        // Asset loading tests
+        async function runAssetTests() {
+            const results = document.getElementById('asset-results');
+            results.innerHTML = '<p>Testing asset loading...</p>';
+            
+            const assets = [
+                { name: 'Main JS Bundle', path: '/assets/index-vpoUoAHQ.js' },
+                { name: 'Denver Health Logo', path: '/denver-health-logo.svg' },
+                { name: 'App Icon 192', path: '/icon-192.png' },
+                { name: 'App Icon 512', path: '/icon-512.png' },
+                { name: 'Apple Touch Icon', path: '/apple-touch-icon.png' },
+                { name: 'Vite Logo', path: '/vite.svg' }
+            ];
+            
+            results.innerHTML = '';
+            
+            for (const asset of assets) {
+                const testDiv = document.createElement('div');
+                testDiv.className = 'test-item test-unknown';
+                testDiv.innerHTML = `<span>${asset.name}</span><span>Testing...</span>`;
+                results.appendChild(testDiv);
+                
+                try {
+                    const response = await fetch(window.location.origin + asset.path, { method: 'HEAD' });
+                    if (response.ok) {
+                        testDiv.className = 'test-item test-pass';
+                        testDiv.innerHTML = `<span>${asset.name}</span><span>✅ ${response.status} (${response.headers.get('content-type')})</span>`;
+                    } else {
+                        testDiv.className = 'test-item test-fail';
+                        testDiv.innerHTML = `<span>${asset.name}</span><span>❌ ${response.status}</span>`;
+                    }
+                } catch (error) {
+                    testDiv.className = 'test-item test-fail';
+                    testDiv.innerHTML = `<span>${asset.name}</span><span>❌ ${error.message}</span>`;
+                }
+            }
+        }
+
+        // Service Worker tests
+        async function runServiceWorkerTests() {
+            const results = document.getElementById('sw-results');
+            results.innerHTML = '<p>Testing service worker...</p>';
+            
+            results.innerHTML = '';
+            
+            // Test if service worker is supported
+            const supportDiv = document.createElement('div');
+            if ('serviceWorker' in navigator) {
+                supportDiv.className = 'test-item test-pass';
+                supportDiv.innerHTML = '<span>Service Worker Support</span><span>✅ Supported</span>';
+            } else {
+                supportDiv.className = 'test-item test-fail';
+                supportDiv.innerHTML = '<span>Service Worker Support</span><span>❌ Not Supported</span>';
+                results.appendChild(supportDiv);
+                return;
+            }
+            results.appendChild(supportDiv);
+            
+            // Test registrations
+            try {
+                const registrations = await navigator.serviceWorker.getRegistrations();
+                const regDiv = document.createElement('div');
+                regDiv.className = 'test-item test-pass';
+                regDiv.innerHTML = `<span>Active Registrations</span><span>✅ ${registrations.length} found</span>`;
+                results.appendChild(regDiv);
+                
+                registrations.forEach((reg, index) => {
+                    const scopeDiv = document.createElement('div');
+                    scopeDiv.className = 'test-item test-pass';
+                    scopeDiv.innerHTML = `<span>Registration ${index + 1} Scope</span><span>✅ ${reg.scope}</span>`;
+                    results.appendChild(scopeDiv);
+                });
+            } catch (error) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'test-item test-fail';
+                errorDiv.innerHTML = `<span>Registration Check</span><span>❌ ${error.message}</span>`;
+                results.appendChild(errorDiv);
+            }
+        }
+
+        // Initialize
+        updateLocationInfo();
+        
+        // Auto-refresh location info every 5 seconds
+        setInterval(updateLocationInfo, 5000);
+        
+        console.log('🔍 Debug page loaded successfully');
+        console.log('Current location:', window.location.href);
+        console.log('Is GitHub Pages:', window.location.hostname === 'gsiegel14.github.io');
+    </script>
+</body>
+</html> 

@@ -81,8 +81,11 @@ define(['./workbox-40861e81'], (function (workbox) { 'use strict';
     "url": "apple-touch-icon.png",
     "revision": "aa880320c3880bfe2b34a774f8d15457"
   }, {
-    "url": "assets/index-vpoUoAHQ.js",
+    "url": "assets/index-DxxlDvGX.js",
     "revision": null
+  }, {
+    "url": "debug.html",
+    "revision": "efda9c5c1e38157a4da745e89620debb"
   }, {
     "url": "denver-health-logo.svg",
     "revision": "bd2017d9ba48da73a2ffb0bf88eaa962"
@@ -97,7 +100,7 @@ define(['./workbox-40861e81'], (function (workbox) { 'use strict';
     "revision": "5de1f50d728fc1f364dad67f3ca2afb9"
   }, {
     "url": "index.html",
-    "revision": "5bc6e88a0bca6aabbabe8b993b430cd9"
+    "revision": "d381e8333e43b351ae7fd6a07a91120d"
   }, {
     "url": "manifest.webmanifest",
     "revision": "93e782d9861875f3e54eabf763e25d52"
