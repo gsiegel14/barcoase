@@ -9,6 +9,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+      base: '/barcoase/',
       includeAssets: ['denver-health-logo.svg', 'vite.svg', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png'],
       manifest: {
         name: 'Denver Health - QR Code Processor',
