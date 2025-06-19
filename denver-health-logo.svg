@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <!-- Background circle -->
+  <circle cx="60" cy="60" r="60" fill="#0066CC"/>
+  
+  <!-- Medical cross -->
+  <rect x="45" y="30" width="30" height="60" rx="3" fill="white"/>
+  <rect x="30" y="45" width="60" height="30" rx="3" fill="white"/>
+  
+  <!-- Denver Health text -->
+  <text x="60" y="100" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12" font-weight="bold">
+    DENVER HEALTH
+  </text>
+</svg> 
