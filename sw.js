@@ -100,13 +100,13 @@ define(['./workbox-40861e81'], (function (workbox) { 'use strict';
     "revision": "5de1f50d728fc1f364dad67f3ca2afb9"
   }, {
     "url": "index.html",
-    "revision": "d381e8333e43b351ae7fd6a07a91120d"
+    "revision": "d567c41c76a20c1976c5c6477796c77b"
   }, {
     "url": "manifest.webmanifest",
     "revision": "93e782d9861875f3e54eabf763e25d52"
   }, {
     "url": "registerSW.js",
-    "revision": "1872c500de691dce40960bb85481de07"
+    "revision": "ba6b6082a8342064219447e452845f2a"
   }, {
     "url": "vite.svg",
     "revision": "8e3a10e157f75ada21ab742c022d5430"
